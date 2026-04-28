@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --surface: #111111;
+  --surface-alt: #1a1a1a;
+  --border: #222222;
+  --text-primary: #f5f5f5;
+  --text-muted: #888888;
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --gradient-accent-from: #4f46e5;
+  --gradient-accent-via: #7c3aed;
+  --gradient-accent-to: #9333ea;
+
+  --color-background: #0a0a0a;
+  --color-surface: #111111;
+  --color-surface-alt: #1a1a1a;
+  --color-border: #222222;
+  --color-text-primary: #f5f5f5;
+  --color-text-muted: #888888;
+  --color-accent: #6366f1;
+  --color-accent-hover: #818cf8;
+  --color-gradient-accent-from: #4f46e5;
+  --color-gradient-accent-via: #7c3aed;
+  --color-gradient-accent-to: #9333ea;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-border: var(--border);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-gradient-accent-from: var(--gradient-accent-from);
+  --color-gradient-accent-via: var(--gradient-accent-via);
+  --color-gradient-accent-to: var(--gradient-accent-to);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
