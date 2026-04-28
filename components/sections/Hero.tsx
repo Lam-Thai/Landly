@@ -47,7 +47,11 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
         <motion.h1
-          className="text-6xl font-bold tracking-tight text-transparent sm:text-7xl lg:text-8xl bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text"
+          className="bg-clip-text text-6xl font-bold tracking-tight text-transparent sm:text-7xl lg:text-8xl"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, var(--color-gradient-accent-from), var(--color-gradient-accent-via), var(--color-gradient-accent-to))",
+          }}
           variants={animationVariants.staggerChildren}
           initial="hidden"
           animate="visible"

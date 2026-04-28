@@ -31,7 +31,11 @@ export function Features() {
       <div className="mx-auto max-w-6xl">
         <AnimatedSection
           variant="fadeIn"
-          className="mb-12 h-px w-full bg-gradient-to-r from-indigo-600/10 via-violet-500/80 to-purple-600/10"
+          className="mb-12 h-px w-full"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, color-mix(in srgb, var(--color-gradient-accent-from) 10%, transparent), color-mix(in srgb, var(--color-gradient-accent-via) 80%, transparent), color-mix(in srgb, var(--color-gradient-accent-to) 10%, transparent))",
+          }}
         />
 
         <AnimatedSection
