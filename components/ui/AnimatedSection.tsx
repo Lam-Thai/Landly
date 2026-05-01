@@ -27,8 +27,8 @@ export function AnimatedSection({
   const mergedTransition =
     visibleState && "transition" in visibleState
       ? {
-          ...(visibleState.transition ?? {}),
-          delay: (visibleState.transition?.delay ?? 0) + delay,
+          ...(visibleState.transition as Record<string, unknown> ?? {}),
+          delay: (((visibleState.transition as Record<string, unknown>)?.delay as number) ?? 0) + delay,
         }
       : { delay };
   const resolvedVariant =
