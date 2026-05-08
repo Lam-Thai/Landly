@@ -1,7 +1,23 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { currentUser } from "@clerk/nextjs/server";
 import { requireAuth } from "@/lib/auth";
+
+type DashboardUser = Awaited<ReturnType<typeof currentUser>>;
+
+export function getUserIdentity(user: DashboardUser) {
+  const displayName =
+    user?.fullName ||
+    [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
+    "Member";
+  const emailAddress =
+    user?.primaryEmailAddress?.emailAddress ||
+    user?.emailAddresses[0]?.emailAddress ||
+    "No email available";
+
+  return { displayName, emailAddress };
+}
 
 const navItems = [
   { label: "Overview", href: "#overview" },
@@ -17,14 +33,7 @@ export default async function DashboardLayout({
   await requireAuth();
 
   const user = await currentUser();
-  const displayName =
-    user?.fullName ||
-    [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
-    "Member";
-  const emailAddress =
-    user?.primaryEmailAddress?.emailAddress ||
-    user?.emailAddresses[0]?.emailAddress ||
-    "No email available";
+  const { displayName, emailAddress } = getUserIdentity(user);
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(99,102,241,0.14),transparent_32%),linear-gradient(180deg,#0a0a0a_0%,#09090b_100%)] text-text-primary">
@@ -64,9 +73,11 @@ export default async function DashboardLayout({
             </p>
             <div className="mt-4 flex items-center gap-3">
               {user?.imageUrl ? (
-                <img
+                <Image
                   src={user.imageUrl}
                   alt={displayName}
+                  width={48}
+                  height={48}
                   className="h-12 w-12 rounded-2xl object-cover ring-1 ring-white/10"
                 />
               ) : (

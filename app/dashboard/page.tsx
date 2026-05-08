@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { requireAuth } from "@/lib/auth";
+import { getUserIdentity } from "./layout";
 
 const overviewCards = [
   {
@@ -20,17 +20,8 @@ const overviewCards = [
 ];
 
 export default async function DashboardPage() {
-  await requireAuth();
-
   const user = await currentUser();
-  const displayName =
-    user?.fullName ||
-    [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
-    "Member";
-  const emailAddress =
-    user?.primaryEmailAddress?.emailAddress ||
-    user?.emailAddresses[0]?.emailAddress ||
-    "No email available";
+  const { displayName, emailAddress } = getUserIdentity(user);
 
   return (
     <div className="space-y-6 pb-8 pt-2 sm:space-y-8 sm:pt-6">
