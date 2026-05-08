@@ -39,3 +39,46 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Playwright e2e
+/playwright-report/
+/test-results/
+/e2e/
+!/e2e/**/*.spec.ts
+
+# sensitive secrets / credentials
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.ovpn
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+*.kubeconfig
+
+# local databases / dumps
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+*.dump
+*.bak
+
+# runtime data
+uploads/
+tmp/
+temp/
+
+# local tool/editor files
+.idea/
+.vscode/
+.cursor/
+
+# OS artifacts
+Thumbs.db
+Desktop.ini

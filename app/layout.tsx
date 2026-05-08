@@ -30,14 +30,33 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isE2E =
+    process.env.PLAYWRIGHT_E2E === "true" ||
+    process.env.NEXT_PUBLIC_PLAYWRIGHT_E2E === "true";
+
   return (
-    <ClerkProvider>
-      <html
-        lang="en"
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      >
-        <body className="flex min-h-full flex-col font-sans">{children}</body>
-      </html>
-    </ClerkProvider>
+    <>
+      {isE2E ? (
+        <html
+          lang="en"
+          className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        >
+          <body className="flex min-h-full flex-col font-sans">
+            {children}
+          </body>
+        </html>
+      ) : (
+        <ClerkProvider>
+          <html
+            lang="en"
+            className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+          >
+            <body className="flex min-h-full flex-col font-sans">
+              {children}
+            </body>
+          </html>
+        </ClerkProvider>
+      )}
+    </>
   );
 }

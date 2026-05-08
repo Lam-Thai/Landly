@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAuth } from "@/lib/auth";
+import { requireApiAuth } from "@/lib/auth";
 import { generatePDF } from "@/lib/pdf";
 import type { DocumentData } from "@/types/pdf";
 
 export async function POST(req: NextRequest) {
   try {
     // Require authentication
-    await requireAuth();
+    await requireApiAuth();
 
     // Parse request body
     const body = await req.json();
