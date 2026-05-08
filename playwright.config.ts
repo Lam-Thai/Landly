@@ -6,6 +6,7 @@ export default defineConfig({
   testDir: "./e2e",
   timeout: 30_000,
   retries: isCI ? 1 : 0,
+  workers: isCI ? undefined : 1,
   reporter: isCI ? "github" : "list",
   use: {
     baseURL: "http://localhost:3000",
