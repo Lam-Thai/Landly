@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { getUserIdentity } from "./layout";
+import { getUserIdentity } from "./userIdentity";
 
 const overviewCards = [
   {

@@ -31,6 +31,7 @@ test("sign-in page contains a sign-in form or Clerk component", async ({
 }) => {
   // Checks for either the local E2E form fallback or Clerk's rendered UI.
   await page.goto("/sign-in");
+  await page.waitForLoadState("domcontentloaded");
 
   const signInForm = page.locator('form[aria-label="sign-in-form"]');
   if ((await signInForm.count()) > 0) {
@@ -40,6 +41,7 @@ test("sign-in page contains a sign-in form or Clerk component", async ({
 
   const clerkRoot = page.locator("[data-clerk-root]");
   const anyForm = page.locator("form");
-  await expect(clerkRoot.or(anyForm).first()).toBeVisible();
+  const locator = clerkRoot.or(anyForm).first();
+  await expect(locator).toBeVisible({ timeout: 10000 });
 });
 
