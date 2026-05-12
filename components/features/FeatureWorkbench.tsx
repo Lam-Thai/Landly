@@ -23,6 +23,15 @@ type ResumeVersion = {
   tailoredResume: string;
 };
 
+type ResumeVersionMetadata = {
+  id: string;
+  title: string;
+  createdAt: string;
+};
+
+const ENABLE_PERSISTENCE = false; // Set to true to enable local storage persistence
+const METADATA_TTL_DAYS = 30;
+
 const STORAGE_KEY = "landly.resumeVersions";
 const STOP_WORDS = new Set([
   "about",
@@ -105,15 +114,25 @@ export function FeatureWorkbench() {
   const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
+    if (!ENABLE_PERSISTENCE) return;
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) {
       return;
     }
 
     try {
-      const parsed = JSON.parse(raw) as ResumeVersion[];
+      const parsed = JSON.parse(raw) as ResumeVersionMetadata[];
       if (Array.isArray(parsed)) {
-        setVersions(parsed);
+        const now = Date.now();
+        const ttlMs = METADATA_TTL_DAYS * 24 * 60 * 60 * 1000;
+        const valid = parsed.filter((v) => now - new Date(v.createdAt).getTime() < ttlMs);
+        const reconstructed: ResumeVersion[] = valid.map((v) => ({
+          ...v,
+          jobDescription: "",
+          resume: "",
+          tailoredResume: "",
+        }));
+        setVersions(reconstructed);
       }
     } catch {
       window.localStorage.removeItem(STORAGE_KEY);
@@ -121,7 +140,13 @@ export function FeatureWorkbench() {
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(versions));
+    if (!ENABLE_PERSISTENCE) return;
+    const metadata = versions.map((v) => ({
+      id: v.id,
+      title: v.title,
+      createdAt: v.createdAt,
+    }));
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(metadata));
   }, [versions]);
 
   const matchData = useMemo(() => {
@@ -197,7 +222,8 @@ export function FeatureWorkbench() {
     setError("");
     setStatus("");
 
-    if (!file.type.includes("text") && !file.name.endsWith(".txt") && !file.name.endsWith(".md")) {
+    const lowerName = file.name.toLowerCase();
+    if (!file.type.includes("text") && !lowerName.endsWith(".txt") && !lowerName.endsWith(".md")) {
       setError("Upload a text-based file (.txt or .md), or paste your resume.");
       return;
     }
@@ -243,8 +269,12 @@ export function FeatureWorkbench() {
       const anchor = document.createElement("a");
       anchor.href = url;
       anchor.download = "tailored_resume.pdf";
+      document.body.appendChild(anchor);
       anchor.click();
-      URL.revokeObjectURL(url);
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        document.body.removeChild(anchor);
+      }, 100);
       setStatus("PDF downloaded.");
     } catch {
       setError("Something went wrong while downloading PDF.");
@@ -281,17 +311,21 @@ export function FeatureWorkbench() {
           </div>
           <h3 className="mt-5 text-xl font-semibold text-text-primary">Upload or Paste Resume</h3>
           <p className="mt-3 text-sm leading-relaxed text-text-muted">Upload a text file or paste resume content.</p>
+          <label htmlFor="resume-file-input" className="block text-xs font-medium text-text-muted mt-4">Upload file</label>
           <input
+            id="resume-file-input"
             type="file"
             accept=".txt,.md,text/plain,text/markdown"
             onChange={(e) => uploadResumeFile(e.target.files?.[0] ?? null)}
-            className="mt-4 block w-full text-sm text-text-muted file:mr-4 file:rounded-md file:border-0 file:bg-accent file:px-3 file:py-2 file:text-sm file:font-medium file:text-white"
+            className="mt-2 block w-full text-sm text-text-muted file:mr-4 file:rounded-md file:border-0 file:bg-accent file:px-3 file:py-2 file:text-sm file:font-medium file:text-white"
           />
+          <label htmlFor="resume-textarea" className="block text-xs font-medium text-text-muted mt-4">Resume content</label>
           <textarea
+            id="resume-textarea"
             value={resumeText}
             onChange={(e) => setResumeText(e.target.value)}
             placeholder="Paste your resume content"
-            className="mt-4 min-h-40 w-full rounded-md border border-border bg-surface-alt p-3 text-sm text-text-primary"
+            className="mt-2 min-h-40 w-full rounded-md border border-border bg-surface-alt p-3 text-sm text-text-primary"
           />
         </AnimatedSection>
 

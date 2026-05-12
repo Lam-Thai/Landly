@@ -27,13 +27,21 @@ export default function JobDescriptionInput({
     onSubmit();
   };
 
+  const inputId = "job-description-input";
+  const errorId = `${inputId}-error`;
+
   return (
     <div className="space-y-2">
+      <label htmlFor={inputId} className="block text-xs font-medium text-text-muted">
+        Job posting
+      </label>
       <textarea
+        id={inputId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         maxLength={maxLength}
         placeholder="Paste a job posting"
+        aria-describedby={error ? errorId : undefined}
         className="min-h-40 w-full rounded-md border border-border bg-surface-alt p-3 text-sm text-text-primary"
       />
       <div className="flex items-center justify-between text-xs text-text-muted">
@@ -46,7 +54,7 @@ export default function JobDescriptionInput({
           Apply
         </button>
       </div>
-      {error ? <p className="text-xs text-red-400">{error}</p> : null}
+      {error ? <p id={errorId} role="alert" className="text-xs text-red-400">{error}</p> : null}
     </div>
   );
 }
