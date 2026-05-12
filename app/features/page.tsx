@@ -100,7 +100,7 @@ export default function FeaturesPage() {
             >
               Create free account
             </Link>
-            <Link href="/" className="rounded-md border border-white/10 px-6 py-3 text-sm">
+            <Link href="/contact" className="rounded-md border border-white/10 px-6 py-3 text-sm">
               Contact sales
             </Link>
           </div>
