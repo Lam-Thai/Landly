@@ -14,7 +14,7 @@ export default function ContactPage() {
 
         <div className="mt-6 space-y-4">
           <p className="text-sm">Email: <a href="mailto:sales@landly.example" className="text-accent">sales@landly.example</a></p>
-          <p className="text-sm">Or visit our <Link href="/" className="underline">help center</Link>.</p>
+          <p className="text-sm">Or visit our <Link href="/" className="underline">home page</Link>.</p>
         </div>
       </section>
     </main>
