@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 export const metadata = {
   title: "Features — Landly",
@@ -8,30 +9,29 @@ export const metadata = {
 export default function FeaturesPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-black via-slate-900 to-black text-white">
-      <section className="mx-auto max-w-6xl px-6 py-24 text-center">
-        <h1 className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
-          Tailor your resume to every job — fast
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
-          Landly uses AI to analyze job postings and transform your resume so it matches what hiring
-          managers are looking for. Save time, increase callbacks, and apply with confidence.
-        </p>
+      <AnimatedSection className="mx-auto max-w-6xl px-6 py-24 text-center" variant="staggerChildren">
+        <AnimatedSection className="mx-auto max-w-3xl" delay={0}>
+          <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl">
+            Your resume, tailored for every job
+          </h1>
+        </AnimatedSection>
 
-        <div className="mt-8 flex justify-center gap-4">
+        <AnimatedSection className="mx-auto mt-4 max-w-2xl" delay={0.08}>
+          <p className="text-lg text-gray-300">
+            AI-powered tailoring that analyzes job postings and highlights the skills and
+            experience recruiters care about — save time and improve your interview rate.
+          </p>
+        </AnimatedSection>
+
+        <AnimatedSection className="mt-8 flex justify-center gap-4" delay={0.16}>
           <Link
             href="/sign-up"
             className="rounded-md bg-accent px-6 py-3 text-sm font-semibold text-black hover:opacity-95"
           >
             Get started — Sign up
           </Link>
-          <Link
-            href="/"
-            className="rounded-md border border-white/10 px-6 py-3 text-sm font-medium text-white/90"
-          >
-            Learn more
-          </Link>
-        </div>
-      </section>
+        </AnimatedSection>
+      </AnimatedSection>
 
       <section id="features" className="mx-auto max-w-6xl px-6 py-12">
         <h2 className="text-2xl font-bold">Features</h2>
