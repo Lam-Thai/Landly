@@ -62,6 +62,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("PDF generation error:", error);
 
+    // Check if this is an auth error
     if (error instanceof Error && error.message === "Unauthorized") {
       return NextResponse.json(
         { error: "Unauthorized" },
