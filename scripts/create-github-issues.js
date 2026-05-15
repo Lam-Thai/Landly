@@ -20,7 +20,6 @@ const LABELS = [
   { name: "feature", color: "e4e669" },
   { name: "auth", color: "d93f0b" },
   { name: "ai", color: "1d76db" },
-  { name: "payments", color: "0e8a16" },
   { name: "storage", color: "e11d48" },
   { name: "ui", color: "f9d0c4" },
 ];
@@ -128,38 +127,6 @@ const ISSUES = [
     title: "PDF: Create /api/pdf POST route",
     body: "POST accepts { title, content, authorName }. Require auth via requireAuth(). Validate inputs. Call generatePDF() and return response with Content-Type: application/pdf and Content-Disposition: attachment headers.",
     labels: ["setup"],
-  },
-
-  // PAYMENTS
-  {
-    title: "Stripe: Install Stripe and add test keys",
-    body: "Install stripe and @stripe/stripe-js. Add STRIPE_SECRET_KEY (sk_test_...), NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY (pk_test_...), and STRIPE_WEBHOOK_SECRET to .env.local. Use TEST keys only from dashboard.stripe.com",
-    labels: ["payments"],
-  },
-  {
-    title: "Stripe: Create server and client Stripe instances",
-    body: "Create /lib/stripe.ts as server-only Stripe client using secret key. Create /lib/stripe-client.ts exporting loadStripe() using the publishable key for client-side use.",
-    labels: ["payments"],
-  },
-  {
-    title: "Stripe: Create /api/stripe/checkout POST route",
-    body: "Accepts { priceId }. Require auth, pass userId as client_reference_id. Create Stripe Checkout Session with success_url (/dashboard?payment=success) and cancel_url (/pricing). Return { url }.",
-    labels: ["payments"],
-  },
-  {
-    title: "Stripe: Create /api/stripe/webhook POST route",
-    body: "Read raw body (required for signature verification). Verify with STRIPE_WEBHOOK_SECRET. Handle checkout.session.completed: get userId from client_reference_id, log success, add TODO for Prisma update. Return 200 immediately. Export runtime = 'nodejs', dynamic = 'force-dynamic'",
-    labels: ["payments"],
-  },
-  {
-    title: "Stripe: Create CheckoutButton client component",
-    body: "Create /components/ui/CheckoutButton.tsx. Client component that calls /api/stripe/checkout and redirects to the returned Stripe URL. Show loading state while redirecting.",
-    labels: ["payments"],
-  },
-  {
-    title: "Stripe: Test checkout with Stripe test card",
-    body: "Use test card 4242 4242 4242 4242 with any future expiry and any CVC. Verify webhook fires and logs correctly. Use Stripe CLI (stripe listen) for local webhook testing.",
-    labels: ["payments"],
   },
 
   // STORAGE

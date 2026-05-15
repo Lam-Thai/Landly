@@ -82,7 +82,6 @@ During Playwright runs, the app can use `PLAYWRIGHT_E2E` / `NEXT_PUBLIC_PLAYWRIG
 | `POST /api/pdf` | Authenticated PDF generation |
 | `POST /api/ai` | Authenticated stub (extend for AI) |
 | `POST /api/upload` | Authenticated stub (extend for uploads) |
-| `POST /api/stripe/checkout` | Authenticated stub (extend for Stripe Checkout) |
 | `POST /api/webhooks/clerk` | Clerk webhook (requires `CLERK_WEBHOOK_SECRET`, validates with Svix) |
 
 ## Environment variables
