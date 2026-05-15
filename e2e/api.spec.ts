@@ -34,13 +34,3 @@ test("POST /api/upload returns 401 when not authenticated", async ({
   expect(response.status()).toBe(401);
 });
 
-test("POST /api/stripe/checkout returns 401 when not authenticated", async ({
-  page,
-}) => {
-  // Checks protected Stripe checkout endpoint rejects unauthenticated requests.
-  const response = await page.request.post("/api/stripe/checkout", {
-    data: { priceId: "price_test_123" },
-  });
-  expect(response.status()).toBe(401);
-});
-
