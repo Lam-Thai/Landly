@@ -6,9 +6,9 @@ import { requireAuth } from "@/lib/auth";
 import { getUserIdentity } from "./userIdentity";
 
 const navItems = [
-  { label: "Overview", href: "#overview" },
-  { label: "Profile", href: "#profile" },
-  { label: "Security", href: "#security" },
+  { label: "New Tailor", href: "/dashboard/tailor" },
+  { label: "History", href: "/dashboard/history" },
+  { label: "Account", href: "/dashboard/account" },
 ];
 
 export default async function DashboardLayout({
